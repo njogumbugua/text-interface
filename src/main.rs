@@ -13,8 +13,19 @@ fn main() {
             .read_line(&mut choice)
             .expect("failed to read line");
 
-        let choice: u32 = choice.trim().parse().unwrap();
+        let choice: u32 = match choice.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Please pick the right choice!!!");
+                continue;
+            }
+        };
 
-        println!("you have picked choice {}", choice);
+        match choice {
+            1 => println!("You have picked choice 1"),
+            2 => println!("You have picked choice 2"),
+            3 => println!("You have picked choice 3"),
+            _ => println!("Invalid choice! Please choose between 1, 2 or 3"),
+        }
     }
 }
