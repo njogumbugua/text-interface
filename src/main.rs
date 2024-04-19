@@ -1,6 +1,6 @@
 use std::io;
 
-fn main() {
+fn main() -> ! {
     loop {
         println!();
         println!("Welcome to Jamii Company, choose an option you would like to perform");
@@ -22,9 +22,53 @@ fn main() {
         };
 
         match choice {
-            1 => println!("You have picked choice 1"),
+            1 => {
+                println!("Choose Department");
+                println!("1. Engineering");
+                println!("2. Sales");
+                let mut department = String::new();
+                io::stdin()
+                    .read_line(&mut department)
+                    .expect("failed to read line");
+
+                let department: u32 = match department.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Please pick the right choice!!!");
+                        continue;
+                    }
+                };
+
+                match department {
+                    1 => println!("Engineering department"),
+                    2 => println!("Sales department"),
+                    _ => println!("Please pick the right choice!!!"),
+                }
+            }
             2 => println!("You have picked choice 2"),
-            3 => println!("You have picked choice 3"),
+            3 => {
+                println!("Choose Department");
+                println!("1. Engineering");
+                println!("2. Sales");
+                let mut department = String::new();
+                io::stdin()
+                    .read_line(&mut department)
+                    .expect("failed to read line");
+
+                let department: u32 = match department.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Please pick the right choice!!!");
+                        continue;
+                    }
+                };
+
+                match department {
+                    1 => println!("Engineering department"),
+                    2 => println!("Sales department"),
+                    _ => println!("Please pick the right choice!!!"),
+                }
+            }
             _ => println!("Invalid choice! Please choose between 1, 2 or 3"),
         }
     }
