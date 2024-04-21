@@ -1,6 +1,52 @@
 use std::io;
 
-fn main() -> ! {
+// Function to get user input as u32
+fn get_user_input(message: &str) -> u32 {
+    loop {
+        println!("{}", message);
+
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+
+        match input.trim().parse() {
+            Ok(num) => return num,
+            Err(_) => println!("Please enter a valid number"),
+        }
+    }
+}
+
+// Function to add employee to department
+fn add_employee_to_department() {
+    let department_message = "Choose Department\n1. Engineering\n2. Sales";
+    let department_choice = get_user_input(department_message);
+
+    match department_choice {
+        1 => println!("Engineering department\nInsert employee name"),
+        2 => println!("Sales department\nInsert employee name"),
+        _ => println!("Please pick the right choice!!!"),
+    }
+}
+
+// Function to display employee names according to department
+fn display_employee_names_by_department() {
+    let department_message = "Choose Department\n1. Engineering\n2. Sales";
+    let department_choice = get_user_input(department_message);
+
+    match department_choice {
+        1 => println!("Engineering department\nThere are 20 employees in Engineering Department"),
+        2 => println!("Sales department\nThere are 50 employees in Sales Department"),
+        _ => println!("Please pick the right choice!!!"),
+    }
+}
+
+// function to display all employee names in Jamii Company
+fn display_all_employee_names() {
+    println!("There are 100 employees at Jamii Company");
+}
+
+fn main() {
     loop {
         println!();
         println!("Welcome to Jamii Company, choose an option you would like to perform");
@@ -8,80 +54,14 @@ fn main() -> ! {
         println!("2. Display all employee names in the company");
         println!("3. Display all employee names according to department");
 
-        let mut choice = String::new();
-        io::stdin()
-            .read_line(&mut choice)
-            .expect("failed to read line");
-
-        let choice: u32 = match choice.trim().parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("Please pick the right choice!!!");
-                continue;
-            }
-        };
+        let choice = get_user_input("Enter your choice:");
 
         match choice {
-            1 => {
-                println!("Choose Department");
-                println!("1. Engineering");
-                println!("2. Sales");
-                let mut department = String::new();
-                io::stdin()
-                    .read_line(&mut department)
-                    .expect("failed to read line");
-
-                let department: u32 = match department.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        println!("Please pick the right choice!!!");
-                        continue;
-                    }
-                };
-
-                match department {
-                    1 => {
-                        println!("Engineering department");
-                        println!("Insert employee name");
-                    }
-                    2 => {
-                        println!("Sales department");
-                        println!("Insert employee name");
-                    }
-                    _ => println!("Please pick the right choice!!!"),
-                }
-            }
-            2 => println!("You have picked choice 2"),
-            3 => {
-                println!("Choose Department");
-                println!("1. Engineering");
-                println!("2. Sales");
-                let mut department = String::new();
-                io::stdin()
-                    .read_line(&mut department)
-                    .expect("failed to read line");
-
-                let department: u32 = match department.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        println!("Please pick the right choice!!!");
-                        continue;
-                    }
-                };
-
-                match department {
-                    1 => {
-                        println!("Engineering department");
-                        println!("There are 20 employees in Engineering Department");
-                    }
-                    2 => {
-                        println!("Sales department");
-                        println!("There are 50 employees in Sales Department");
-                    }
-                    _ => println!("Please pick the right choice!!!"),
-                }
-            }
-            _ => println!("Invalid choice! Please choose between 1, 2 or 3"),
+            1 => add_employee_to_department(),
+            2 => display_all_employee_names(),
+            3 => display_employee_names_by_department(),
+            _ => println!("Invalid choice! Please choose between 1, 2, or 3"),
         }
     }
 }
+
