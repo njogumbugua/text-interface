@@ -40,8 +40,14 @@ fn main() -> ! {
                 };
 
                 match department {
-                    1 => println!("Engineering department"),
-                    2 => println!("Sales department"),
+                    1 => {
+                        println!("Engineering department");
+                        println!("Insert employee name");
+                    }
+                    2 => {
+                        println!("Sales department");
+                        println!("Insert employee name");
+                    }
                     _ => println!("Please pick the right choice!!!"),
                 }
             }
@@ -64,8 +70,14 @@ fn main() -> ! {
                 };
 
                 match department {
-                    1 => println!("Engineering department"),
-                    2 => println!("Sales department"),
+                    1 => {
+                        println!("Engineering department");
+                        println!("There are 20 employees in Engineering Department");
+                    }
+                    2 => {
+                        println!("Sales department");
+                        println!("There are 50 employees in Sales Department");
+                    }
                     _ => println!("Please pick the right choice!!!"),
                 }
             }
