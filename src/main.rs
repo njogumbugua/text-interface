@@ -53,6 +53,7 @@ fn main() {
         println!("1. Add employee name to department");
         println!("2. Display all employee names in the company");
         println!("3. Display all employee names according to department");
+        println!("4. Exit program");
 
         let choice = get_user_input("Enter your choice:");
 
@@ -60,8 +61,11 @@ fn main() {
             1 => add_employee_to_department(),
             2 => display_all_employee_names(),
             3 => display_employee_names_by_department(),
+            4 => {
+                println!("Exiting program.");
+                break;
+            }
             _ => println!("Invalid choice! Please choose between 1, 2, or 3"),
         }
     }
 }
-
