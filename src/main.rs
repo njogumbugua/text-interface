@@ -1,4 +1,4 @@
-use std::io;
+use std::{collections::HashMap, io};
 
 // Function to get user input as u32
 fn get_user_input(message: &str) -> u32 {
@@ -18,35 +18,73 @@ fn get_user_input(message: &str) -> u32 {
 }
 
 // Function to add employee to department
-fn add_employee_to_department() {
+fn add_employee_to_department(company: &mut HashMap<String, String>) {
     let department_message = "Choose Department\n1. Engineering\n2. Sales";
     let department_choice = get_user_input(department_message);
 
-    match department_choice {
-        1 => println!("Engineering department\nInsert employee name"),
-        2 => println!("Sales department\nInsert employee name"),
-        _ => println!("Please pick the right choice!!!"),
-    }
+    let department = match department_choice {
+        1 => "Engineering",
+        2 => "Sales",
+        _ => {
+            println!("Please pick the right choice!!!");
+            return;
+        }
+    };
+    println!("Enter employee name:");
+    let mut employee_name = String::new();
+    io::stdin()
+        .read_line(&mut employee_name)
+        .expect("Failed to read line");
+
+    company.insert(employee_name.trim().to_string(), department.to_string());
+    println!(
+        "Employee {} added to {} department.",
+        employee_name.trim(),
+        department
+    );
 }
 
 // Function to display employee names according to department
-fn display_employee_names_by_department() {
+fn display_employee_names_by_department(company: &HashMap<String, String>) {
     let department_message = "Choose Department\n1. Engineering\n2. Sales";
     let department_choice = get_user_input(department_message);
 
-    match department_choice {
-        1 => println!("Engineering department\nThere are 20 employees in Engineering Department"),
-        2 => println!("Sales department\nThere are 50 employees in Sales Department"),
-        _ => println!("Please pick the right choice!!!"),
+    let department = match department_choice {
+        1 => "Engineering",
+        2 => "Sales",
+        _ => {
+            println!("Please pick the right choice!!!");
+            return;
+        }
+    };
+
+    let mut count = 0;
+    println!("Employees in {} department:", department);
+    for (employee, dep) in company {
+        if dep == department {
+            println!("{}", employee);
+            count += 1;
+        }
+    }
+    if count == 0 {
+        println!("No employees in {} department.", department);
     }
 }
 
 // function to display all employee names in Jamii Company
-fn display_all_employee_names() {
-    println!("There are 100 employees at Jamii Company");
+fn display_all_employee_names(company: &HashMap<String, String>) {
+    if company.is_empty() {
+        println!("No employees in the company.");
+    } else {
+        println!("Employees in the company:");
+        for (employee, department) in company {
+            println!("{} - {}", employee, department);
+        }
+    }
 }
 
 fn main() {
+    let mut company: HashMap<String, String> = HashMap::new();
     loop {
         println!();
         println!("Welcome to Jamii Company, choose an option you would like to perform");
@@ -58,9 +96,9 @@ fn main() {
         let choice = get_user_input("Enter your choice:");
 
         match choice {
-            1 => add_employee_to_department(),
-            2 => display_all_employee_names(),
-            3 => display_employee_names_by_department(),
+            1 => add_employee_to_department(&mut company),
+            2 => display_all_employee_names(&company),
+            3 => display_employee_names_by_department(&company),
             4 => {
                 println!("Exiting program.");
                 break;
