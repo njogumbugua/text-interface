@@ -103,7 +103,7 @@ fn main() {
                 println!("Exiting program.");
                 break;
             }
-            _ => println!("Invalid choice! Please choose between 1, 2, or 3"),
+            _ => println!("Invalid choice! Please choose between 1, 2, 3 or 4"),
         }
     }
 }
