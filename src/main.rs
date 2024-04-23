@@ -58,16 +58,21 @@ fn display_employee_names_by_department(company: &HashMap<String, String>) {
         }
     };
 
-    let mut count = 0;
-    println!("Employees in {} department:", department);
-    for (employee, dep) in company {
-        if dep == department {
-            println!("{}", employee);
-            count += 1;
-        }
-    }
-    if count == 0 {
+    let mut department_employees: Vec<_> = company
+        .iter()
+        .filter(|(_, dep)| dep == &&department)
+        .map(|(name, _)| name)
+        .collect();
+
+    department_employees.sort();
+
+    if department_employees.is_empty() {
         println!("No employees in {} department.", department);
+    } else {
+        println!("Employees in {} department:", department);
+        for employee in department_employees {
+            println!("{}", employee);
+        }
     }
 }
 
@@ -76,9 +81,11 @@ fn display_all_employee_names(company: &HashMap<String, String>) {
     if company.is_empty() {
         println!("No employees in the company.");
     } else {
+        let mut sorted_employees: Vec<_> = company.iter().map(|(name, _)| name).collect();
+        sorted_employees.sort();
         println!("Employees in the company:");
-        for (employee, department) in company {
-            println!("{} - {}", employee, department);
+        for employee in sorted_employees {
+            println!("{} - {}", employee, company.get(employee).unwrap());
         }
     }
 }
