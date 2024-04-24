@@ -19,36 +19,41 @@ fn get_user_input(message: &str) -> u32 {
 
 // Function to add employee to department
 fn add_employee_to_department(company: &mut HashMap<String, String>) {
+    let department_message = "Choose Department\n1. Engineering\n2. Sales";
+    let department_choice = get_user_input(department_message);
+
+    let department = match department_choice {
+        1 => "Engineering",
+        2 => "Sales",
+        _ => {
+            println!("Please pick the right choice!!!");
+            return;
+        }
+    };
+
     loop {
-        println!("Choose Department\n1. Engineering\n2. Sales\nType 'exit' to return to main menu");
-        let department_choice = get_user_input("Enter department choice:");
+        println!("Enter employee name. Type 'exit' to return to main menu:");
+        let mut employee_name = String::new();
+        io::stdin()
+            .read_line(&mut employee_name)
+            .expect("Failed to read line");
 
-        if department_choice == 1 || department_choice == 2 {
-            let department = if department_choice == 1 {
-                "Engineering"
-            } else {
-                "Sales"
-            };
+        let employee_name = employee_name.trim();
 
-            println!("Enter employee name (Type 'exit' to return to department selection):");
-            let mut employee_name = String::new();
-            io::stdin()
-                .read_line(&mut employee_name)
-                .expect("Failed to read line");
+        if employee_name.is_empty() {
+            println!("Employee name cannot be empty!!");
+        }
 
-            let employee_name = employee_name.trim();
-
-            if employee_name.eq_ignore_ascii_case("exit") {
-                break; // Exit the loop if the user types "exit"
-            }
-
+        if employee_name.eq_ignore_ascii_case("exit") {
+            println!("Returning to main menu");
+            break;
+        } else {
             company.insert(employee_name.to_string(), department.to_string());
             println!(
-                "Employee {} added to {} department.",
-                employee_name, department
+                "Employee {} added to {} department.\n",
+                employee_name.trim(),
+                department
             );
-        } else {
-            println!("Please pick the right choice!!!");
         }
     }
 }
