@@ -12,7 +12,7 @@ fn get_user_input(message: &str) -> u32 {
 
         match input.trim().parse() {
             Ok(num) => return num,
-            Err(_) => println!("Please enter a valid number"),
+            Err(_) => println!("Please enter a valid number\n"),
         }
     }
 }
@@ -42,6 +42,12 @@ fn add_employee_to_department(company: &mut HashMap<String, String>) {
 
         if employee_name.is_empty() {
             println!("Employee name cannot be empty!!");
+            return;
+        }
+
+        if !employee_name.chars().all(char::is_alphabetic) {
+            println!("Employee name must contain only alphabetic characters!");
+            return;
         }
 
         if employee_name.eq_ignore_ascii_case("exit") {
